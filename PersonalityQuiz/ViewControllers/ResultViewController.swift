@@ -31,7 +31,11 @@ class ResultViewController: UIViewController {
         let answersAnimal = answersChosen.map{ $0.animal }
         
         for answer in answersAnimal {
-            frequency[answer] = (frequency[answer] ?? 0) + 1
+            if let count = frequency[answer] {
+                frequency[answer] = count + 1
+            } else {
+                frequency[answer] = 1
+            }
         }
         
         let descending = frequency.sorted { $0.1 > $1.1 }
