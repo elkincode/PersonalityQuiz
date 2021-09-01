@@ -14,18 +14,42 @@ class ResultViewController: UIViewController {
     // 3. Отобразить результат в соответствии с этим животным
     // 4. Избавиться от кнопки возврата на предыдущий экран
     
-    var questions: [Question]!
+    @IBOutlet var emojiResultLabel: UILabel!
+    @IBOutlet var definitionResultLabel: UILabel!
+    
     var answersChosen: [Answer]!
-    var currentAnswers: [Answer] {
-        questions[questionIndex].answers
-    }
-    private var questionIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         navigationItem.setHidesBackButton(true, animated: true)
-        print(answersChosen ?? 0)
-        print(answersChosen.count)
+        maximumTypeCalculation()
     }
     
+    func maximumTypeCalculation() {
+        var frequency: [Animal:Int] = [:]
+        let answersAnimal = answersChosen.map{ $0.animal }
+        
+        for answer in answersAnimal {
+            frequency[answer] = (frequency[answer] ?? 0) + 1
+        }
+        
+        let descending = frequency.sorted { $0.1 > $1.1 }
+        
+        let result = descending[0].key
+        
+        definitionResultLabel.text = result.definition
+        emojiResultLabel.text = String(result.rawValue)
+    }
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
 }
