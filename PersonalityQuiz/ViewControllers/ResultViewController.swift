@@ -38,7 +38,7 @@ class ResultViewController: UIViewController {
         let result = descending[0].key
         
         definitionResultLabel.text = result.definition
-        emojiResultLabel.text = String(result.rawValue)
+        emojiResultLabel.text = "Вы — " + String(result.rawValue)
     }
 
 }
